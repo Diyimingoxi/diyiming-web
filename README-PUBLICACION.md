@@ -38,6 +38,8 @@ La versión actual no guarda datos: abre el programa de correo del visitante con
 
 ## Revisión de entrega
 
+Última actualización de despliegue: julio de 2026.
+
 - Abra Inicio, Nosotros, Servicios, Obras por Impuestos, Experiencia, Conocimiento y Contacto.
 - Revise el menú en teléfono y computadora.
 - Confirme el correo y el dominio.
