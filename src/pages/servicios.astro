@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import { getServices, type Service } from "../lib/sanity";
+
+const cmsServices = await getServices();
+const fallback: Service[] = [
+  { title: "Identificación y priorización", summary: "Revisión de oportunidades, alineamiento con objetivos, análisis preliminar y criterios para priorizar iniciativas." },
+  { title: "Diagnóstico de viabilidad", summary: "Lectura integral del estado del proyecto, brechas de información, actores, riesgos y próximos hitos." },
+  { title: "Estructuración de la ruta OxI", summary: "Organización de actividades, dependencias, entregables y responsables para avanzar con claridad." },
+  { title: "Asistencia técnica y documental", summary: "Acompañamiento en la preparación y revisión de información necesaria durante el proceso." },
+  { title: "Articulación institucional", summary: "Facilitación de coordinaciones entre empresa privada, entidad pública y otros actores involucrados." },
+  { title: "Seguimiento de gestión", summary: "Control de hitos, alertas, compromisos, cronogramas y reportes para la toma de decisiones." },
+  { title: "Capacitación especializada", summary: "Sesiones ejecutivas y talleres adaptados a equipos que necesitan comprender y gestionar el mecanismo." },
+  { title: "Asesoría estratégica", summary: "Soporte a líderes y equipos para evaluar escenarios y definir cursos de acción responsables." }
+];
+const services = cmsServices.length ? cmsServices : fallback;
+---
+
+<BaseLayout title="Servicios | Diyiming Consultores" description="Servicios de identificación, estructuración, gestión y seguimiento de proyectos mediante Obras por Impuestos.">
+  <section class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/">Inicio</a> / Servicios</div><span class="eyebrow">Capacidades</span><h1>Acompañamiento especializado para cada desafío OxI.</h1><p class="lead">Configuramos el alcance según el tipo de organización, la madurez del proyecto y las decisiones que necesita resolver.</p></div></section>
+  <section class="section"><div class="container content-grid"><div><div class="service-list">{services.map(service => <ServiceCard service={service} />)}</div></div><aside class="sidecard"><h3>Un alcance a su medida</h3><p>Cada proyecto tiene una realidad distinta. Iniciamos con una conversación de diagnóstico para definir el apoyo que realmente necesita.</p><a class="btn btn-light" href="/contacto">Solicitar reunión</a></aside></div></section>
+</BaseLayout>

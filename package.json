@@ -1,0 +1,21 @@
+{
+  "name": "diyiming-web",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro dev",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "latest",
+    "@astrojs/check": "latest",
+    "@portabletext/to-html": "latest",
+    "@sanity/client": "latest",
+    "astro": "latest",
+    "typescript": "^6.0.0",
+    "wrangler": "latest"
+  }
+}

@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getSettings } from "../lib/sanity";
+
+const settings = await getSettings();
+const email = settings.email || "contacto@diyiming.com";
+const address = settings.address || "Lima, Perú";
+---
+
+<BaseLayout title="Contacto | Diyiming Consultores" description="Converse con Diyiming Consultores sobre una oportunidad o proyecto mediante Obras por Impuestos.">
+  <section class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/">Inicio</a> / Contacto</div><span class="eyebrow">Conversemos</span><h1>El siguiente paso comienza con una buena conversación.</h1><p class="lead">Cuéntenos qué está evaluando. Le responderemos para coordinar una primera reunión y comprender el contexto.</p></div></section>
+  <section class="section"><div class="container contact-grid"><div><span class="eyebrow">Contacto</span><h2>Estamos para orientarle.</h2><div class="contact-list"><div class="contact-item"><b>Correo</b><br /><a href={`mailto:${email}`}>{email}</a></div>{settings.phone && <div class="contact-item"><b>Teléfono</b><br /><a href={`tel:${settings.phone.replace(/\s/g, "")}`}>{settings.phone}</a></div>}<div class="contact-item"><b>Ubicación</b><br />{address}</div><div class="contact-item"><b>Atención</b><br />Reuniones presenciales y virtuales previa coordinación.</div></div></div><form class="form" id="contact-form" data-email={email}><div class="form-row"><label>Nombre y apellido<input required name="nombre" autocomplete="name" /></label><label>Empresa o entidad<input name="empresa" autocomplete="organization" /></label></div><div class="form-row"><label>Correo electrónico<input required type="email" name="correo" autocomplete="email" /></label><label>Motivo de consulta<select name="interes"><option>Evaluar una oportunidad OxI</option><option>Asesoría para empresa privada</option><option>Asesoría para entidad pública</option><option>Capacitación</option><option>Otra consulta</option></select></label></div><label>Cuéntenos brevemente<textarea required name="mensaje"></textarea></label><button class="btn btn-primary" type="submit">Preparar correo de consulta</button><p class="legal">Al enviar, se abrirá su aplicación de correo con la información completada. No almacenamos sus datos en esta versión.</p></form></div></section>
+  <script>
+    const form = document.querySelector<HTMLFormElement>("#contact-form");
+    form?.addEventListener("submit", event => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const subject = encodeURIComponent(`Consulta web - ${data.get("nombre")}`);
+      const body = encodeURIComponent(`Nombre: ${data.get("nombre")}\nEmpresa: ${data.get("empresa")}\nCorreo: ${data.get("correo")}\nInterés: ${data.get("interes")}\n\n${data.get("mensaje")}`);
+      const email = form.dataset.email || "contacto@diyiming.com";
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    });
+  </script>
+</BaseLayout>

@@ -1,0 +1,47 @@
+---
+import type { SiteSettings } from "../lib/sanity";
+
+interface Props {
+  settings: SiteSettings;
+}
+
+const { settings } = Astro.props;
+const email = settings.email || "contacto@diyiming.com";
+const address = settings.address || "Lima, Perú";
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <img class="footer-logo" src="/assets/images/logo-diyiming.png" alt="Diyiming Consultores" width="440" height="147" />
+        <p>Orientación y apoyo técnico para empresas privadas y entidades públicas que participan en proyectos mediante Obras por Impuestos.</p>
+      </div>
+      <div>
+        <h3>Empresa</h3>
+        <a href="/nosotros">Nosotros</a>
+        <a href="/experiencia">Experiencia</a>
+        <a href="/blog">Conocimiento</a>
+      </div>
+      <div>
+        <h3>Especialidad</h3>
+        <a href="/servicios">Servicios</a>
+        <a href="/obras-por-impuestos">Mecanismo OxI</a>
+        <a href="/contacto">Contacto</a>
+      </div>
+      <div>
+        <h3>Conversemos</h3>
+        <p>{address}</p>
+        <a href={`mailto:${email}`}>{email}</a>
+        {settings.phone && <a href={`tel:${settings.phone.replace(/\s/g, "")}`}>{settings.phone}</a>}
+        {settings.linkedin && <a href={settings.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
+        <p>Atención previa coordinación.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {year} Diyiming Consultores. Todos los derechos reservados.</span>
+      <span>Consultoría especializada en Obras por Impuestos.</span>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,26 @@
+---
+import { imageUrl, type TeamMember } from "../lib/sanity";
+
+interface Props {
+  member: TeamMember;
+}
+
+const { member } = Astro.props;
+const photo = imageUrl(member.photoUrl, 900);
+---
+
+<article class="team-card">
+  <div class="team-photo">
+    {photo ? (
+      <img src={photo} alt={member.photoAlt || member.name} loading="lazy" width="720" height="900" />
+    ) : (
+      <div class="team-placeholder" aria-hidden="true">{member.name.slice(0, 1)}</div>
+    )}
+  </div>
+  <div class="team-copy">
+    <span>{member.role}</span>
+    <h3>{member.name}</h3>
+    {member.bio && <p>{member.bio}</p>}
+    {member.linkedin && <a href={member.linkedin} target="_blank" rel="noopener noreferrer">Ver LinkedIn →</a>}
+  </div>
+</article>

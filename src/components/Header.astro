@@ -1,0 +1,55 @@
+---
+const { pathname } = Astro.url;
+const nav = [
+  { href: "/", label: "Inicio" },
+  { href: "/nosotros", label: "Nosotros" },
+  { href: "/servicios", label: "Servicios" },
+  { href: "/obras-por-impuestos", label: "Obras por Impuestos" },
+  { href: "/experiencia", label: "Experiencia" },
+  { href: "/blog", label: "Conocimiento" }
+];
+
+const isActive = (href: string) =>
+  href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+---
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="/" aria-label="Diyiming Consultores - Inicio">
+      <img src="/assets/images/logo-diyiming.png" alt="Diyiming Consultores" width="440" height="147" />
+    </a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="main-navigation" aria-label="Abrir menú">
+      <span aria-hidden="true">☰</span>
+    </button>
+    <nav id="main-navigation" class="nav-links" aria-label="Navegación principal">
+      {nav.map(item => (
+        <a href={item.href} class:list={{ active: isActive(item.href) }} aria-current={isActive(item.href) ? "page" : undefined}>
+          {item.label}
+        </a>
+      ))}
+      <a class="btn btn-primary" href="/contacto">Solicitar asesoría</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const menu = document.querySelector<HTMLButtonElement>(".menu-toggle");
+  const navigation = document.querySelector<HTMLElement>(".nav-links");
+  const icon = menu?.querySelector("span");
+
+  menu?.addEventListener("click", () => {
+    const open = navigation?.classList.toggle("open") ?? false;
+    menu.setAttribute("aria-expanded", String(open));
+    menu.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    if (icon) icon.textContent = open ? "×" : "☰";
+  });
+
+  navigation?.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      navigation.classList.remove("open");
+      menu?.setAttribute("aria-expanded", "false");
+      menu?.setAttribute("aria-label", "Abrir menú");
+      if (icon) icon.textContent = "☰";
+    });
+  });
+</script>

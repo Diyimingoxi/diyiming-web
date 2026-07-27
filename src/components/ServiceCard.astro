@@ -1,0 +1,25 @@
+---
+import type { Service } from "../lib/sanity";
+
+interface Props {
+  service: Service;
+  index?: number;
+  compact?: boolean;
+}
+
+const { service, index = 0, compact = false } = Astro.props;
+---
+
+{compact ? (
+  <article class="card reveal">
+    <div class="card-num">{String(index + 1).padStart(2, "0")} / {(service.category || "Servicio").toUpperCase()}</div>
+    <h3>{service.title}</h3>
+    <p>{service.summary}</p>
+    <a href="/servicios">Ver alcance →</a>
+  </article>
+) : (
+  <article class="service-detail">
+    <h3>{service.title}</h3>
+    <p>{service.summary}</p>
+  </article>
+)}

@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import TeamCard from "../components/TeamCard.astro";
+import { getTeam } from "../lib/sanity";
+
+const team = await getTeam();
+---
+
+<BaseLayout
+  title="Nosotros | Diyiming Consultores"
+  description="Conozca el propósito, enfoque, equipo y valores de Diyiming Consultores, especialistas en Obras por Impuestos."
+>
+  <section class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/">Inicio</a> / Nosotros</div><span class="eyebrow">Diyiming Consultores</span><h1>Capacidad técnica con una mirada humana del desarrollo.</h1><p class="lead">Trabajamos para que la colaboración entre empresa y Estado se traduzca en proyectos públicos bien orientados, gestionados con responsabilidad y capaces de generar valor real.</p></div></section>
+  <section class="section"><div class="container split"><div><span class="eyebrow">Nuestro propósito</span><h2>Hacer más claro el camino hacia infraestructura de impacto.</h2><p>Diyiming nace para acompañar a los actores que participan en Obras por Impuestos, aportando orden, criterio técnico y capacidad de articulación.</p><p>Comprendemos que detrás de cada expediente, hito y coordinación existe una necesidad pública concreta. Por eso abordamos cada reto con rigor, transparencia y sentido de propósito.</p></div><div class="visual-panel"><div class="visual-mark"><b>1</b><p>equipo, múltiples disciplinas y un objetivo compartido: impulsar desarrollo.</p></div></div></div></section>
+  <section class="section soft"><div class="container"><div class="cards"><article class="card"><div class="card-num">PROPÓSITO</div><h3>Crear valor público</h3><p>Contribuir a que la inversión se convierta en infraestructura y servicios que respondan a prioridades reales.</p></article><article class="card"><div class="card-num">VISIÓN</div><h3>Ser un referente confiable</h3><p>Consolidarnos como aliados estratégicos por nuestra solvencia técnica, cercanía y capacidad de generar avances.</p></article><article class="card"><div class="card-num">FORMA DE ACTUAR</div><h3>Rigor con cercanía</h3><p>Combinamos análisis responsable, comunicación clara y una relación colaborativa con cada organización.</p></article></div></div></section>
+  <section class="section"><div class="container"><span class="eyebrow">Equipo directivo</span><h2>Experiencia que orienta cada decisión.</h2><p class="lead">Conozca a las personas que lideran nuestra asesoría y articulan capacidades para impulsar proyectos de impacto.</p><div class="team-grid">{team.length ? team.map(member => <TeamCard member={member} />) : <div class="empty-state">Los perfiles del equipo directivo aparecerán aquí cuando sean publicados desde el CMS.</div>}</div></div></section>
+  <section class="section soft"><div class="container"><span class="eyebrow">Principios</span><h2>Lo que guía cada decisión.</h2><div class="service-list"><div class="service-detail"><h3>Integridad</h3><p>Actuamos con transparencia, coherencia y responsabilidad profesional.</p></div><div class="service-detail"><h3>Excelencia técnica</h3><p>Sustentamos las recomendaciones en análisis, evidencia y conocimiento del contexto.</p></div><div class="service-detail"><h3>Colaboración</h3><p>Construimos confianza y facilitamos el entendimiento entre equipos diversos.</p></div><div class="service-detail"><h3>Orientación a resultados</h3><p>Convertimos la complejidad en prioridades, decisiones y acciones concretas.</p></div></div></div></section>
+</BaseLayout>

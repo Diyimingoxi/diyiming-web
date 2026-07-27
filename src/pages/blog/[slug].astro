@@ -1,0 +1,60 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getPost, formatDate, imageUrl } from "../../lib/sanity";
+import { toHTML } from "@portabletext/to-html";
+
+const { slug = "" } = Astro.params;
+const post = await getPost(slug);
+
+if (!post) Astro.response.status = 404;
+
+const bodyHtml = post?.body ? toHTML(post.body as any, {
+  components: {
+    types: {
+      image: ({ value }: any) => {
+        if (!value?.url) return "";
+        const src = imageUrl(value.url, 1400);
+        const alt = String(value.alt || "Imagen del artículo").replace(/"/g, "&quot;");
+        return `<figure><img src="${src}" alt="${alt}" loading="lazy"><figcaption>${value.alt || ""}</figcaption></figure>`;
+      }
+    },
+    marks: {
+      link: ({ children, value }: any) => {
+        const href = String(value?.href || "#");
+        const external = href.startsWith("http");
+        return `<a href="${href}"${external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${children}</a>`;
+      }
+    }
+  }
+}) : "";
+
+const cover = imageUrl(post?.coverUrl, 1800);
+const description = post?.excerpt || "Artículo especializado de Diyiming Consultores sobre Obras por Impuestos.";
+---
+
+<BaseLayout
+  title={post ? `${post.title} | Diyiming Consultores` : "Artículo no encontrado | Diyiming Consultores"}
+  description={description}
+  image={cover || "/og.png"}
+  type="article"
+  canonical={`/blog/${slug}`}
+>
+  <section class="page-hero">
+    <div class="container">
+      {post ? (
+        <>
+          <div class="breadcrumbs"><a href="/blog">Conocimiento</a> / Artículo</div>
+          <span class="eyebrow">Ideas Diyiming</span>
+          <h1>{post.title}</h1>
+          <p class="lead">{post.excerpt}</p>
+          <p class="article-meta">{formatDate(post.publishedAt)}</p>
+          {post.author && <div class="article-author">{post.author.photoUrl && <img src={imageUrl(post.author.photoUrl, 160)} alt={post.author.name} width="80" height="80" />}<div><b>{post.author.name}</b><span>{post.author.role}</span></div></div>}
+          {cover && <img class="article-cover" src={cover} alt={post.coverAlt || post.title} width="1600" height="900" />}
+        </>
+      ) : (
+        <><span class="eyebrow">Conocimiento</span><h1>Artículo no encontrado.</h1><p class="lead">El contenido solicitado no existe o aún no ha sido publicado.</p><a class="btn btn-primary" href="/blog">Volver al blog</a></>
+      )}
+    </div>
+  </section>
+  {post && <section class="section"><div class="container"><article class="article-body" set:html={bodyHtml} /></div></section>}
+</BaseLayout>

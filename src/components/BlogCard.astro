@@ -1,0 +1,19 @@
+---
+import { formatDate, imageUrl, type PostSummary } from "../lib/sanity";
+
+interface Props {
+  post: PostSummary;
+}
+
+const { post } = Astro.props;
+const cover = imageUrl(post.imageUrl, 1200);
+---
+
+<a class:list={["insight", { "insight-photo": cover }, "reveal"]} href={`/blog/${post.slug}`}>
+  {cover && <img src={cover} alt={post.imageAlt || post.title} loading="lazy" width="1200" height="675" />}
+  <div class="insight-copy">
+    <small>{formatDate(post.publishedAt)}</small>
+    <h3>{post.title}</h3>
+    <span>{post.excerpt || "Leer artículo"} →</span>
+  </div>
+</a>

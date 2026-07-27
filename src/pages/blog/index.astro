@@ -1,0 +1,12 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogCard from "../../components/BlogCard.astro";
+import { getPosts } from "../../lib/sanity";
+
+const posts = await getPosts(24);
+---
+
+<BaseLayout title="Conocimiento | Diyiming Consultores" description="Guías y análisis sobre Obras por Impuestos, inversión con impacto y gestión de proyectos públicos.">
+  <section class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/">Inicio</a> / Conocimiento</div><span class="eyebrow">Ideas Diyiming</span><h1>Conocimiento para decidir y avanzar.</h1><p class="lead">Explicamos el mecanismo OxI con claridad y compartimos criterios para reconocer oportunidades, gestionar riesgos y generar impacto.</p></div></section>
+  <section class="section"><div class="container">{posts.length ? <div class="insights">{posts.map(post => <BlogCard post={post} />)}</div> : <div class="empty-state">Los artículos publicados desde el CMS aparecerán automáticamente en esta sección.</div>}</div></section>
+</BaseLayout>

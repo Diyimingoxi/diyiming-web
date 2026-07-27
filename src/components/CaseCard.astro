@@ -1,0 +1,17 @@
+---
+import { imageUrl, type CaseStudy } from "../lib/sanity";
+
+interface Props {
+  item: CaseStudy;
+}
+
+const { item } = Astro.props;
+const cover = imageUrl(item.imageUrl, 1200);
+const style = cover ? `--case-image:url('${cover.replace(/'/g, "%27")}')` : undefined;
+---
+
+<article class:list={["case-card", { "case-photo": cover }]} style={style}>
+  <span>{item.sector}{item.location ? ` · ${item.location}` : ""}</span>
+  <h3>{item.title}</h3>
+  <p>{item.summary}</p>
+</article>
