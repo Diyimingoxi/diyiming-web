@@ -7,3 +7,4 @@ const menu=document.querySelector(".menu-toggle"),links=document.querySelector("
 document.querySelectorAll(".nav-links a").forEach(a=>a.addEventListener("click",()=>links.classList.remove("open")));
 const observer=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add("visible")),{threshold:.12});document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
 const form=document.querySelector("#contact-form");if(form)form.addEventListener("submit",e=>{e.preventDefault();const d=new FormData(form);const subject=encodeURIComponent(`Consulta web - ${d.get("nombre")}`);const body=encodeURIComponent(`Nombre: ${d.get("nombre")}\nEmpresa: ${d.get("empresa")}\nCorreo: ${d.get("correo")}\nInterés: ${d.get("interes")}\n\n${d.get("mensaje")}`);location.href=`mailto:contacto@diyiming.com?subject=${subject}&body=${body}`});
+import("./cms.js").catch(()=>{});
