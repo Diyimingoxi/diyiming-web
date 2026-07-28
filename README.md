@@ -64,6 +64,3 @@ public/
 ```
 
 La versión HTML anterior se conserva por separado y no forma parte de esta implementación.
-
-Última actualización de despliegue: julio de 2026.
-Compilación limpia solicitada.

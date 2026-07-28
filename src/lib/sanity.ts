@@ -25,6 +25,8 @@ export interface SiteSettings {
   address?: string;
   linkedin?: string;
   facebook?: string;
+  contactHours?: string;
+  footerDescription?: string;
 }
 
 export interface Service {
@@ -50,6 +52,12 @@ export interface CaseStudy {
   summary: string;
   imageUrl?: string;
   imageAlt?: string;
+}
+
+export interface Faq {
+  question: string;
+  answer: string;
+  category?: string;
 }
 
 export interface PostSummary {
@@ -115,7 +123,7 @@ export function getSettings() {
   return safeFetch<SiteSettings>(
     `*[_type=="siteSettings" && _id=="siteSettings"][0]{
       companyName,heroEyebrow,heroTitle,heroDescription,aboutTitle,aboutText,
-      email,phone,whatsapp,address,linkedin,facebook
+      email,phone,whatsapp,address,contactHours,linkedin,facebook,footerDescription
     }`,
     fallbackSettings
   );
@@ -125,6 +133,14 @@ export function getServices() {
   return safeFetch<Service[]>(
     `*[_type=="service" && active==true]|order(order asc){title,category,summary,order}`,
     []
+  );
+}
+
+export function getFaqs(category = "oxi") {
+  return safeFetch<Faq[]>(
+    `*[_type=="faq" && active==true && category==$category]|order(order asc){question,answer,category}`,
+    [],
+    {category}
   );
 }
 

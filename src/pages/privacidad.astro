@@ -1,0 +1,20 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {getSettings} from "../lib/sanity";
+const settings = await getSettings();
+const email = settings.email || "contacto@diyiming.com";
+---
+<BaseLayout title="Política de privacidad | Diyiming Consultores" description="Información sobre el tratamiento de datos enviados a Diyiming Consultores.">
+  <section class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/">Inicio</a> / Privacidad</div><span class="eyebrow">Privacidad</span><h1>Tratamos cada consulta con responsabilidad.</h1></div></section>
+  <section class="section"><div class="container article-body">
+    <h2>Datos que recibimos</h2>
+    <p>Cuando utiliza el formulario podemos recibir su nombre, empresa, correo, teléfono, motivo de consulta y mensaje. No solicitamos documentos adjuntos ni datos sensibles.</p>
+    <h2>Para qué los utilizamos</h2>
+    <p>Los usamos exclusivamente para responder, evaluar la consulta, coordinar reuniones y mantener un registro comercial de seguimiento.</p>
+    <h2>Acceso y conservación</h2>
+    <p>El acceso al registro está limitado a integrantes autorizados de Diyiming. La información se conserva durante el tiempo necesario para atender la consulta y cumplir las obligaciones aplicables.</p>
+    <h2>Sus solicitudes</h2>
+    <p>Puede solicitar información, actualización o eliminación de sus datos escribiendo a <a href={`mailto:${email}`}>{email}</a>.</p>
+    <p class="legal">Esta política deberá ser validada por la empresa con su asesoría legal antes del lanzamiento definitivo.</p>
+  </div></section>
+</BaseLayout>

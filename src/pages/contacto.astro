@@ -5,20 +5,102 @@ import { getSettings } from "../lib/sanity";
 const settings = await getSettings();
 const email = settings.email || "contacto@diyiming.com";
 const address = settings.address || "Lima, Perú";
+const runtimeEnv = (Astro.locals as unknown as {runtime?: {env?: Record<string, string>}}).runtime?.env || {};
+const turnstileSiteKey = runtimeEnv.TURNSTILE_SITE_KEY || import.meta.env.TURNSTILE_SITE_KEY;
 ---
 
 <BaseLayout title="Contacto | Diyiming Consultores" description="Converse con Diyiming Consultores sobre una oportunidad o proyecto mediante Obras por Impuestos.">
-  <section class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/">Inicio</a> / Contacto</div><span class="eyebrow">Conversemos</span><h1>El siguiente paso comienza con una buena conversación.</h1><p class="lead">Cuéntenos qué está evaluando. Le responderemos para coordinar una primera reunión y comprender el contexto.</p></div></section>
-  <section class="section"><div class="container contact-grid"><div><span class="eyebrow">Contacto</span><h2>Estamos para orientarle.</h2><div class="contact-list"><div class="contact-item"><b>Correo</b><br /><a href={`mailto:${email}`}>{email}</a></div>{settings.phone && <div class="contact-item"><b>Teléfono</b><br /><a href={`tel:${settings.phone.replace(/\s/g, "")}`}>{settings.phone}</a></div>}<div class="contact-item"><b>Ubicación</b><br />{address}</div><div class="contact-item"><b>Atención</b><br />Reuniones presenciales y virtuales previa coordinación.</div></div></div><form class="form" id="contact-form" data-email={email}><div class="form-row"><label>Nombre y apellido<input required name="nombre" autocomplete="name" /></label><label>Empresa o entidad<input name="empresa" autocomplete="organization" /></label></div><div class="form-row"><label>Correo electrónico<input required type="email" name="correo" autocomplete="email" /></label><label>Motivo de consulta<select name="interes"><option>Evaluar una oportunidad OxI</option><option>Asesoría para empresa privada</option><option>Asesoría para entidad pública</option><option>Capacitación</option><option>Otra consulta</option></select></label></div><label>Cuéntenos brevemente<textarea required name="mensaje"></textarea></label><button class="btn btn-primary" type="submit">Preparar correo de consulta</button><p class="legal">Al enviar, se abrirá su aplicación de correo con la información completada. No almacenamos sus datos en esta versión.</p></form></div></section>
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumbs"><a href="/">Inicio</a> / Contacto</div>
+      <span class="eyebrow">Conversemos</span>
+      <h1>El siguiente paso comienza con una buena conversación.</h1>
+      <p class="lead">Cuéntenos qué está evaluando. Nuestro equipo revisará su consulta y se comunicará para comprender el contexto.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container contact-grid">
+      <div>
+        <span class="eyebrow">Contacto</span>
+        <h2>Convirtamos una consulta en un siguiente paso claro.</h2>
+        <p class="lead">La información se registra de manera privada para que el equipo de Diyiming pueda responder y dar seguimiento.</p>
+        <div class="contact-list">
+          <div class="contact-item"><b>Correo</b><br /><a href={`mailto:${email}`}>{email}</a></div>
+          {settings.phone && <div class="contact-item"><b>Teléfono</b><br /><a href={`tel:${settings.phone.replace(/\s/g, "")}`}>{settings.phone}</a></div>}
+          <div class="contact-item"><b>Ubicación</b><br />{address}</div>
+          <div class="contact-item"><b>Atención</b><br />{settings.contactHours || "Reuniones presenciales y virtuales previa coordinación."}</div>
+        </div>
+      </div>
+      <form class="form lead-form" id="contact-form">
+        <div class="form-heading">
+          <span>Consulta inicial</span>
+          <h3>Cuéntenos sobre su necesidad</h3>
+          <p>Campos marcados con * son obligatorios.</p>
+        </div>
+        <div class="form-row">
+          <label>Nombre y apellido *<input required name="name" autocomplete="name" maxlength="120" /></label>
+          <label>Empresa o entidad<input name="company" autocomplete="organization" maxlength="160" /></label>
+        </div>
+        <div class="form-row">
+          <label>Correo electrónico *<input required type="email" name="email" autocomplete="email" maxlength="180" /></label>
+          <label>Teléfono<input type="tel" name="phone" autocomplete="tel" maxlength="40" /></label>
+        </div>
+        <label>Motivo de consulta
+          <select name="interest">
+            <option>Evaluar una oportunidad OxI</option>
+            <option>Asesoría para empresa privada</option>
+            <option>Asesoría para entidad pública</option>
+            <option>Capacitación</option>
+            <option>Otra consulta</option>
+          </select>
+        </label>
+        <label>Cuéntenos brevemente *<textarea required name="message" maxlength="2500"></textarea></label>
+        <label class="consent"><input required type="checkbox" name="consent" /> <span>Acepto que Diyiming utilice estos datos para responder y dar seguimiento a mi consulta, de acuerdo con la <a href="/privacidad">política de privacidad</a>.</span></label>
+        <label class="hp-field" aria-hidden="true">Sitio web<input name="website" tabindex="-1" autocomplete="off" /></label>
+        {turnstileSiteKey && <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>}
+        <button class="btn btn-primary submit-button" type="submit">Enviar consulta</button>
+        <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+        <p class="legal">No solicitamos archivos adjuntos ni datos sensibles. La consulta quedará en el registro privado de Diyiming.</p>
+      </form>
+    </div>
+  </section>
+  {turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
   <script>
     const form = document.querySelector<HTMLFormElement>("#contact-form");
-    form?.addEventListener("submit", event => {
+    const status = document.querySelector<HTMLElement>("#form-status");
+    const button = form?.querySelector<HTMLButtonElement>(".submit-button");
+    form?.addEventListener("submit", async (event) => {
       event.preventDefault();
+      if (!form || !status || !button) return;
+      button.disabled = true;
+      button.textContent = "Enviando...";
+      status.className = "form-status";
+      status.textContent = "";
       const data = new FormData(form);
-      const subject = encodeURIComponent(`Consulta web - ${data.get("nombre")}`);
-      const body = encodeURIComponent(`Nombre: ${data.get("nombre")}\nEmpresa: ${data.get("empresa")}\nCorreo: ${data.get("correo")}\nInterés: ${data.get("interes")}\n\n${data.get("mensaje")}`);
-      const email = form.dataset.email || "contacto@diyiming.com";
-      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+      const payload = {
+        name: data.get("name"), company: data.get("company"), email: data.get("email"),
+        phone: data.get("phone"), interest: data.get("interest"), message: data.get("message"),
+        consent: data.get("consent") === "on", website: data.get("website"),
+        turnstileToken: data.get("cf-turnstile-response"), page: window.location.href,
+      };
+      try {
+        const response = await fetch("/api/leads", {
+          method: "POST", headers: {"content-type": "application/json"}, body: JSON.stringify(payload),
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message || "No se pudo enviar la consulta.");
+        status.className = "form-status success";
+        status.textContent = result.message;
+        form.reset();
+        const turnstile = (window as Window & {turnstile?: {reset: () => void}}).turnstile;
+        turnstile?.reset();
+      } catch (error) {
+        status.className = "form-status error";
+        status.textContent = error instanceof Error ? error.message : "No se pudo enviar la consulta.";
+      } finally {
+        button.disabled = false;
+        button.textContent = "Enviar consulta";
+      }
     });
   </script>
 </BaseLayout>
