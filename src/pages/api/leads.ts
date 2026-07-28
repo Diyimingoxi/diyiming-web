@@ -1,5 +1,7 @@
 import type {APIRoute} from 'astro'
 import {createClient} from '@sanity/client'
+// @ts-expect-error Cloudflare provides this virtual module at runtime
+import {env as cloudflareEnv} from 'cloudflare:workers'
 import {apiVersion, dataset, projectId} from '../../lib/sanity'
 
 export const prerender = false
@@ -17,9 +19,9 @@ const text = (value: unknown, max: number) =>
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-export const POST: APIRoute = async ({request, locals}) => {
+export const POST: APIRoute = async ({request}) => {
   try {
-    const env = (((locals as unknown as {runtime?: {env?: RuntimeEnv}}).runtime?.env) || {}) as RuntimeEnv
+    const env = cloudflareEnv as unknown as RuntimeEnv
     const body = await request.json()
 
     if (text(body.website, 200)) {

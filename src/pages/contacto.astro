@@ -5,8 +5,7 @@ import { getSettings } from "../lib/sanity";
 const settings = await getSettings();
 const email = settings.email || "contacto@diyiming.com";
 const address = settings.address || "Lima, Perú";
-const runtimeEnv = (Astro.locals as unknown as {runtime?: {env?: Record<string, string>}}).runtime?.env || {};
-const turnstileSiteKey = runtimeEnv.TURNSTILE_SITE_KEY || import.meta.env.TURNSTILE_SITE_KEY;
+const turnstileSiteKey = import.meta.env.TURNSTILE_SITE_KEY;
 ---
 
 <BaseLayout title="Contacto | Diyiming Consultores" description="Converse con Diyiming Consultores sobre una oportunidad o proyecto mediante Obras por Impuestos.">
