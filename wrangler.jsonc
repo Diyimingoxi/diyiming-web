@@ -5,6 +5,10 @@
   "compatibility_date": "2026-07-27",
   "compatibility_flags": ["nodejs_compat"],
   "keep_vars": true,
+  "vars": {
+    "LEADS_NOTIFICATION_EMAIL": "edtoribio@pucp.edu.pe",
+    "LEADS_FROM_EMAIL": "DIYIMING Web <formularios@notificaciones.diyiming.com.pe>"
+  },
   "assets": {
     "binding": "ASSETS",
     "directory": "./dist"
