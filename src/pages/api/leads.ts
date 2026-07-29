@@ -95,7 +95,7 @@ export const POST: APIRoute = async ({request}) => {
           to: [env.LEADS_NOTIFICATION_EMAIL],
           reply_to: email,
           subject: `Nueva consulta web: ${name}${company ? ` — ${company}` : ''}`,
-          html: `<h2>Nueva consulta desde diyiming.pe</h2>
+          html: `<h2>Nueva consulta desde diyiming.com.pe</h2>
             <p><strong>Nombre:</strong> ${safe(name)}</p>
             <p><strong>Empresa:</strong> ${safe(company || 'No indicada')}</p>
             <p><strong>Correo:</strong> ${safe(email)}</p>
