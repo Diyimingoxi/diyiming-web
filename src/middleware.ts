@@ -11,8 +11,9 @@ const redirects: Record<string, string> = {
 };
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  if (context.url.hostname === "www.diyiming.com.pe") {
+  if (context.url.protocol === "http:" || context.url.hostname === "www.diyiming.com.pe") {
     const canonical = new URL(context.url);
+    canonical.protocol = "https:";
     canonical.hostname = "diyiming.com.pe";
     return Response.redirect(canonical, 301);
   }
