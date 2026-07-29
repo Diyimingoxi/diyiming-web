@@ -11,6 +11,12 @@ const redirects: Record<string, string> = {
 };
 
 export const onRequest = defineMiddleware(async (context, next) => {
+  if (context.url.hostname === "www.diyiming.com.pe") {
+    const canonical = new URL(context.url);
+    canonical.hostname = "diyiming.com.pe";
+    return Response.redirect(canonical, 301);
+  }
+
   if (context.url.pathname === "/articulo.html") {
     const slug = context.url.searchParams.get("slug");
     return context.redirect(slug ? `/blog/${encodeURIComponent(slug)}` : "/blog", 301);
