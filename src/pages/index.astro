@@ -8,6 +8,17 @@ const [settings, posts] = await Promise.all([
   getPosts(3)
 ]);
 
+const legacyHeroTitles = [
+  "Convertimos inversión en infraestructura que genera desarrollo.",
+  "Convertimos inversión en infraestructura que genera desarrollo"
+];
+const heroTitle = !settings.heroTitle || legacyHeroTitles.includes(settings.heroTitle.trim())
+  ? "Transformamos tus impuestos en obras que generan desarrollo."
+  : settings.heroTitle;
+const heroDescription = !settings.heroDescription || settings.heroDescription.startsWith("Acompañamos a empresas privadas")
+  ? "Brindamos asesoría estratégica para estructurar, gestionar y ejecutar proyectos que impulsan el desarrollo del país mediante soluciones integrales en Obras por Impuestos."
+  : settings.heroDescription;
+
 const capabilities = [
   { number: "01", title: "Gestión integral de Obras por Impuestos", summary: "Estructuramos, articulamos y acompañamos cada etapa del proyecto, desde la oportunidad inicial hasta la correcta emisión del CIPRL." },
   { number: "02", title: "Comercialización de CIPRL", summary: "Conectamos certificados negociables con empresas contribuyentes interesadas en aplicarlos al pago del Impuesto a la Renta, conforme al marco vigente." },
@@ -41,8 +52,8 @@ const partners = [
     <div class="container">
       <div class="hero-copy reveal">
         <span class="eyebrow">{settings.heroEyebrow || "Consultoría especializada en OxI"}</span>
-        <h1>{settings.heroTitle || "Transformamos tus impuestos en obras que generan desarrollo."}</h1>
-        <p>{settings.heroDescription || "Brindamos asesoría estratégica para estructurar, gestionar y ejecutar proyectos que impulsan el desarrollo del país mediante soluciones integrales en Obras por Impuestos."}</p>
+        <h1>{heroTitle}</h1>
+        <p>{heroDescription}</p>
         <div class="actions">
           <a class="btn btn-primary" href="/contacto">Solicitar asesoría</a>
           <a class="btn btn-secondary" href="/obras-por-impuestos">Conocer el mecanismo</a>
