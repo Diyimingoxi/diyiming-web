@@ -1,24 +1,36 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ServiceCard from "../components/ServiceCard.astro";
 import BlogCard from "../components/BlogCard.astro";
-import { getPosts, getServices, getSettings, type Service } from "../lib/sanity";
+import { getPosts, getSettings } from "../lib/sanity";
 
-const [settings, cmsServices, posts] = await Promise.all([
+const [settings, posts] = await Promise.all([
   getSettings(),
-  getServices(),
   getPosts(3)
 ]);
 
-const fallbackServices: Service[] = [
-  { title: "Identificación y priorización", category: "Estrategia", summary: "Evaluamos oportunidades y alineamos proyectos con objetivos institucionales, territoriales y de inversión." },
-  { title: "Asistencia técnica", category: "Estructuración", summary: "Ordenamos información, requisitos y decisiones necesarias para consolidar una ruta viable de proyecto." },
-  { title: "Acompañamiento OxI", category: "Gestión", summary: "Facilitamos la coordinación y el seguimiento durante las etapas clave del mecanismo." },
-  { title: "Coordinación institucional", category: "Articulación", summary: "Conectamos equipos y actores para sostener acuerdos, entregables y decisiones oportunas." },
-  { title: "Seguimiento de hitos", category: "Control", summary: "Monitoreamos avances y alertas para fortalecer el control de compromisos y plazos." },
-  { title: "Capacitación especializada", category: "Conocimiento", summary: "Desarrollamos capacidades para comprender y gestionar mejor el mecanismo OxI." }
+const capabilities = [
+  { number: "01", title: "Gestión integral de Obras por Impuestos", summary: "Estructuramos, articulamos y acompañamos cada etapa del proyecto, desde la oportunidad inicial hasta la correcta emisión del CIPRL." },
+  { number: "02", title: "Comercialización de CIPRL", summary: "Conectamos certificados negociables con empresas contribuyentes interesadas en aplicarlos al pago del Impuesto a la Renta, conforme al marco vigente." },
+  { number: "03", title: "Capacitación especializada en OxI", summary: "Preparamos a equipos de empresas privadas y entidades públicas para tomar decisiones informadas y gestionar el mecanismo con seguridad." },
+  { number: "04", title: "Perfiles, fichas y expedientes técnicos", summary: "Elaboramos los documentos técnicos que permiten convertir una necesidad pública en una inversión viable, consistente y ejecutable." }
 ];
-const services = cmsServices.length ? cmsServices.slice(0, 6) : fallbackServices;
+
+const partners = [
+  ["Gobierno Regional de La Libertad", "gobierno-regional-la-libertad.png"],
+  ["Gobierno Regional de Arequipa", "gobierno-regional-arequipa.png"],
+  ["Gobierno Regional de Cajamarca", "gobierno-regional-cajamarca.png"],
+  ["Gobierno Regional de Ucayali", "gobierno-regional-ucayali.png"],
+  ["Gobierno Regional de San Martín", "gobierno-regional-san-martin.png"],
+  ["Gobierno Regional de Ica", "gobierno-regional-ica.png"],
+  ["Gobierno Regional de Lambayeque", "gobierno-regional-lambayeque.png"],
+  ["Municipalidad Provincial de Huancayo", "municipalidad-provincial-huancayo.png"],
+  ["Municipalidad Distrital de La Tinguiña", "municipalidad-distrital-la-tinguina.png"],
+  ["Municipalidad Distrital de Parcona", "municipalidad-distrital-parcona.png"],
+  ["Municipalidad Distrital de Cerro Colorado", "municipalidad-distrital-cerro-colorado.png"],
+  ["Municipalidad Distrital de Ocucaje", "municipalidad-distrital-ocucaje.png"],
+  ["Municipalidad Distrital de San Juan Bautista", "municipalidad-distrital-san-juan-bautista.png"],
+  ["Municipalidad Distrital de El Tambo", "municipalidad-distrital-el-tambo.png"]
+];
 ---
 
 <BaseLayout
@@ -29,8 +41,8 @@ const services = cmsServices.length ? cmsServices.slice(0, 6) : fallbackServices
     <div class="container">
       <div class="hero-copy reveal">
         <span class="eyebrow">{settings.heroEyebrow || "Consultoría especializada en OxI"}</span>
-        <h1>{settings.heroTitle || "Convertimos inversión en infraestructura que genera desarrollo."}</h1>
-        <p>{settings.heroDescription || "Acompañamos a empresas privadas y entidades públicas en la estructuración, gestión y ejecución de proyectos mediante Obras por Impuestos."}</p>
+        <h1>{settings.heroTitle || "Transformamos tus impuestos en obras que generan desarrollo."}</h1>
+        <p>{settings.heroDescription || "Brindamos asesoría estratégica para estructurar, gestionar y ejecutar proyectos que impulsan el desarrollo del país mediante soluciones integrales en Obras por Impuestos."}</p>
         <div class="actions">
           <a class="btn btn-primary" href="/contacto">Solicitar asesoría</a>
           <a class="btn btn-secondary" href="/obras-por-impuestos">Conocer el mecanismo</a>
@@ -46,10 +58,10 @@ const services = cmsServices.length ? cmsServices.slice(0, 6) : fallbackServices
 
   <div class="trustbar">
     <div class="container trustgrid reveal">
-      <div class="trustitem"><b>Especialización OxI</b><span>Conocimiento del mecanismo y sus actores</span></div>
-      <div class="trustitem"><b>Gestión integral</b><span>De la oportunidad a la ejecución</span></div>
-      <div class="trustitem"><b>Enfoque técnico</b><span>Análisis para decisiones informadas</span></div>
-      <div class="trustitem"><b>Impacto sostenible</b><span>Infraestructura que mejora territorios</span></div>
+      <div class="trustitem"><b>Gestión OxI</b><span>Acompañamiento de principio a fin</span></div>
+      <div class="trustitem"><b>Comercialización de CIPRL</b><span>Conexión entre certificados e inversión empresarial</span></div>
+      <div class="trustitem"><b>Capacitación especializada</b><span>Para empresas privadas y entidades públicas</span></div>
+      <div class="trustitem"><b>Documentos técnicos</b><span>Perfiles, fichas y expedientes</span></div>
     </div>
   </div>
 
@@ -60,9 +72,9 @@ const services = cmsServices.length ? cmsServices.slice(0, 6) : fallbackServices
       </div>
       <div class="reveal">
         <span class="eyebrow">Quiénes somos</span>
-        <h2>{settings.aboutTitle || "Un aliado estratégico para proyectos que transforman."}</h2>
-        <p class="lead">{settings.aboutText || "Diyiming Consultores brinda orientación y apoyo técnico a empresas privadas y entidades públicas que participan en proyectos bajo el mecanismo de Obras por Impuestos."}</p>
-        <p>Integramos análisis, planificación, coordinación y seguimiento para reducir la complejidad, anticipar riesgos y mantener cada iniciativa orientada a resultados.</p>
+        <h2>{settings.aboutTitle || "Estrategia, rigor y articulación para impulsar proyectos con impacto."}</h2>
+        <p class="lead">{settings.aboutText || "Diyiming Consultores brinda asesoría especializada en Obras por Impuestos. Integramos visión estratégica, análisis técnico y coordinación institucional para convertir oportunidades en rutas de acción claras y responsables."}</p>
+        <p>Más que una consultora, somos un aliado estratégico: acompañamos a empresas privadas y entidades públicas durante todo el ciclo del proyecto, reduciendo riesgos y manteniendo cada iniciativa orientada a resultados.</p>
         <div class="checklist">
           <span>Lectura integral del proyecto</span><span>Coordinación entre actores</span>
           <span>Rigurosidad documental</span><span>Acompañamiento cercano</span>
@@ -75,9 +87,52 @@ const services = cmsServices.length ? cmsServices.slice(0, 6) : fallbackServices
   <section class="section soft">
     <div class="container">
       <span class="eyebrow">Qué hacemos</span>
-      <h2>Capacidades para avanzar con claridad.</h2>
-      <p class="lead">Servicios articulados para abordar los desafíos técnicos, administrativos y estratégicos de una iniciativa OxI.</p>
-      <div class="cards">{services.map((service, index) => <ServiceCard service={service} index={index} compact />)}</div>
+      <h2>Convertimos oportunidades en proyectos de alto impacto.</h2>
+      <p class="lead">Ayudamos a empresas privadas y entidades públicas a convertir el mecanismo de Obras por Impuestos en proyectos exitosos que generan desarrollo e impacto sostenible.</p>
+      <div class="capability-grid">
+        {capabilities.map(item => (
+          <article class="capability-card reveal">
+            <span>{item.number}</span><h3>{item.title}</h3><p>{item.summary}</p>
+          </article>
+        ))}
+      </div>
+      <div class="private-advisory reveal">
+        <div><span class="eyebrow">Asesoramiento a empresas privadas</span><h3>Una ruta completa hasta la obtención del CIPRL.</h3></div>
+        <div class="advisory-list">
+          <span>Identificación y evaluación de proyectos viables</span>
+          <span>Estructuración técnica, financiera y legal</span>
+          <span>Orientación para documentos de gestión</span>
+          <span>Monitoreo de procesos de selección</span>
+          <span>Acompañamiento en el Convenio de Inversión</span>
+          <span>Coordinación con entidades y supervisión</span>
+          <span>Seguimiento físico y financiero</span>
+          <span>Gestión para la correcta emisión del CIPRL</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section partners-section">
+    <div class="container">
+      <span class="eyebrow">Experiencia territorial</span>
+      <div class="section-heading-row"><div><h2>Aliados y entidades donde hemos desarrollado Obras por Impuestos.</h2><p class="lead">Experiencia articulando proyectos con gobiernos regionales y municipalidades en distintas zonas del país.</p></div><a class="btn btn-outline" href="/experiencia">Conocer nuestra experiencia</a></div>
+      <div class="partner-grid reveal">
+        {partners.map(([name, file]) => (
+          <div class="partner-logo" title={name}><img src={`/assets/images/aliados/${file}`} alt={`Logotipo de ${name}`} loading="lazy" /><span>{name}</span></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section why-us">
+    <div class="container">
+      <span class="eyebrow">Por qué elegirnos</span><h2>Más valor en cada etapa de la inversión.</h2>
+      <div class="benefit-grid">
+        <article class="benefit-card reveal"><span>01</span><h3>Optimización fiscal</h3><p>Convertimos obligaciones tributarias en oportunidades de inversión pública con impacto real.</p></article>
+        <article class="benefit-card reveal"><span>02</span><h3>Beneficios financieros</h3><p>Facilitamos operaciones con CIPRL negociables y condiciones que protegen el valor de la inversión.</p></article>
+        <article class="benefit-card reveal"><span>03</span><h3>Seguridad y transparencia</h3><p>Gestionamos cada operación con control, cumplimiento, trazabilidad y comunicación clara.</p></article>
+        <article class="benefit-card reveal"><span>04</span><h3>Acompañamiento integral</h3><p>Un equipo especializado desde la estructuración hasta el cierre exitoso y la emisión del certificado.</p></article>
+      </div>
     </div>
   </section>
 
@@ -99,14 +154,14 @@ const services = cmsServices.length ? cmsServices.slice(0, 6) : fallbackServices
     <div class="container oxi-grid">
       <div class="reveal">
         <span class="eyebrow">Obras por Impuestos</span>
-        <h2>Una herramienta que une inversión, capacidad y propósito.</h2>
-        <p class="lead">El mecanismo permite que empresas privadas financien y ejecuten proyectos públicos, recibiendo certificados aplicables al pago de impuestos conforme al marco vigente.</p>
+        <h2>De la obra ejecutada a una oportunidad de inversión empresarial.</h2>
+        <p class="lead">Diyiming estructura y acompaña proyectos que generan CIPRL. Cuando estos certificados tienen carácter negociable, conectamos a sus titulares con empresas contribuyentes interesadas en adquirirlos y aplicarlos al pago del Impuesto a la Renta, conforme al marco vigente.</p>
         <a class="btn btn-light" href="/obras-por-impuestos">Entender cómo funciona</a>
       </div>
       <div class="oxi-points reveal">
-        <div class="oxi-point"><b>Para empresas privadas</b><span>Canaliza inversión con impacto territorial y reputacional.</span></div>
-        <div class="oxi-point"><b>Para entidades públicas</b><span>Contribuye a acelerar infraestructura prioritaria.</span></div>
-        <div class="oxi-point"><b>Para la ciudadanía</b><span>Acerca servicios y obras que mejoran la calidad de vida.</span></div>
+        <div class="oxi-point"><b>Inversión con respaldo público</b><span>Certificados emitidos por el Tesoro Público dentro del mecanismo de Obras por Impuestos.</span></div>
+        <div class="oxi-point"><b>Eficiencia tributaria</b><span>Una alternativa para empresas con obligaciones de Impuesto a la Renta que califican para su aplicación.</span></div>
+        <div class="oxi-point"><b>Gestión especializada</b><span>Acompañamos la evaluación, negociación y cierre de cada operación con rigurosidad documental.</span></div>
       </div>
     </div>
   </section>
@@ -125,7 +180,7 @@ const services = cmsServices.length ? cmsServices.slice(0, 6) : fallbackServices
 
   <section class="cta">
     <div class="container cta-row">
-      <div><span class="eyebrow">Iniciemos una conversación</span><h2>¿Tiene un proyecto, una oportunidad o una decisión por evaluar?</h2></div>
+      <div><span class="eyebrow">Iniciemos una conversación</span><h2>¿Está evaluando desarrollar un proyecto mediante Obras por Impuestos?</h2><p>Le ayudamos a identificar oportunidades, reducir riesgos y gestionar cada etapa hasta la obtención del CIPRL.</p></div>
       <a class="btn btn-light" href="/contacto">Hablar con un especialista</a>
     </div>
   </section>

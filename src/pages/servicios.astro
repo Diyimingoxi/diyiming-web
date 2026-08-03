@@ -5,19 +5,31 @@ import { getServices, type Service } from "../lib/sanity";
 
 const cmsServices = await getServices();
 const fallback: Service[] = [
-  { title: "Identificación y priorización", summary: "Revisión de oportunidades, alineamiento con objetivos, análisis preliminar y criterios para priorizar iniciativas." },
-  { title: "Diagnóstico de viabilidad", summary: "Lectura integral del estado del proyecto, brechas de información, actores, riesgos y próximos hitos." },
-  { title: "Estructuración de la ruta OxI", summary: "Organización de actividades, dependencias, entregables y responsables para avanzar con claridad." },
-  { title: "Asistencia técnica y documental", summary: "Acompañamiento en la preparación y revisión de información necesaria durante el proceso." },
-  { title: "Articulación institucional", summary: "Facilitación de coordinaciones entre empresa privada, entidad pública y otros actores involucrados." },
-  { title: "Seguimiento de gestión", summary: "Control de hitos, alertas, compromisos, cronogramas y reportes para la toma de decisiones." },
-  { title: "Capacitación especializada", summary: "Sesiones ejecutivas y talleres adaptados a equipos que necesitan comprender y gestionar el mecanismo." },
-  { title: "Asesoría estratégica", summary: "Soporte a líderes y equipos para evaluar escenarios y definir cursos de acción responsables." }
+  { title: "Identificación y evaluación de oportunidades", summary: "Analizamos proyectos, prioridades públicas, viabilidad preliminar y su alineamiento con los objetivos de la empresa." },
+  { title: "Estructuración técnica, financiera y legal", summary: "Organizamos la ruta del proyecto, responsabilidades, entregables y condiciones necesarias para avanzar con claridad." },
+  { title: "Gestión y articulación institucional", summary: "Coordinamos con entidades públicas, empresas privadas, supervisores y demás actores durante el proceso." },
+  { title: "Seguimiento hasta la emisión del CIPRL", summary: "Controlamos hitos, alertas, cronogramas y documentación para acompañar el cierre y reconocimiento de la inversión." },
+  { title: "Comercialización de CIPRL", summary: "Evaluamos certificados negociables y conectamos oportunidades con empresas contribuyentes interesadas, conforme al marco aplicable." },
+  { title: "Capacitación especializada", summary: "Diseñamos talleres y sesiones ejecutivas para equipos públicos y privados que necesitan dominar el mecanismo OxI." },
+  { title: "Perfiles, fichas y expedientes técnicos", summary: "Elaboramos documentos técnicos que permiten convertir una necesidad pública en una inversión consistente y ejecutable." },
+  { title: "Asesoría estratégica", summary: "Acompañamos a líderes y equipos en la evaluación de escenarios, riesgos y decisiones relevantes." }
 ];
 const services = cmsServices.length ? cmsServices : fallback;
+
+const coreServices = [
+  ["01", "Gestión integral de Obras por Impuestos", "Estructuración, articulación y acompañamiento desde la identificación de la oportunidad hasta la emisión del certificado."],
+  ["02", "Comercialización de CIPRL", "Conexión estratégica entre certificados con carácter negociable y empresas contribuyentes que buscan una alternativa eficiente para el pago del Impuesto a la Renta."],
+  ["03", "Capacitación especializada en OxI", "Conocimiento aplicado para que los equipos comprendan el mecanismo, gestionen riesgos y tomen mejores decisiones."],
+  ["04", "Perfiles, fichas y expedientes técnicos", "Documentación técnica preparada con rigor para viabilizar inversiones públicas y sostener su correcta ejecución."]
+];
 ---
 
-<BaseLayout title="Servicios | Diyiming Consultores" description="Servicios de identificación, estructuración, gestión y seguimiento de proyectos mediante Obras por Impuestos.">
-  <section class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/">Inicio</a> / Servicios</div><span class="eyebrow">Capacidades</span><h1>Acompañamiento especializado para cada desafío OxI.</h1><p class="lead">Configuramos el alcance según el tipo de organización, la madurez del proyecto y las decisiones que necesita resolver.</p></div></section>
-  <section class="section"><div class="container content-grid"><div><div class="service-list">{services.map(service => <ServiceCard service={service} />)}</div></div><aside class="sidecard"><h3>Un alcance a su medida</h3><p>Cada proyecto tiene una realidad distinta. Iniciamos con una conversación de diagnóstico para definir el apoyo que realmente necesita.</p><a class="btn btn-light" href="/contacto">Solicitar reunión</a></aside></div></section>
+<BaseLayout title="Servicios | Diyiming Consultores" description="Gestión de Obras por Impuestos, comercialización de CIPRL, capacitación y elaboración de documentos técnicos.">
+  <section class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/">Inicio</a> / Servicios</div><span class="eyebrow">Capacidades</span><h1>Soluciones integrales para transformar impuestos en desarrollo.</h1><p class="lead">Unimos conocimiento técnico, gestión institucional y visión comercial para impulsar proyectos y operaciones vinculadas a Obras por Impuestos.</p></div></section>
+
+  <section class="section soft"><div class="container"><span class="eyebrow">Nuestra propuesta</span><h2>Cuatro capacidades, una misma visión de impacto.</h2><div class="capability-grid">{coreServices.map(([number,title,summary]) => <article class="capability-card reveal"><span>{number}</span><h3>{title}</h3><p>{summary}</p></article>)}</div></div></section>
+
+  <section class="section"><div class="container content-grid"><div><span class="eyebrow">Ámbitos de acompañamiento</span><h2>Soporte especializado en cada etapa.</h2><div class="service-list">{services.map(service => <ServiceCard service={service} />)}</div></div><aside class="sidecard"><h3>Un alcance a la medida</h3><p>Cada iniciativa tiene una realidad distinta. Iniciamos con un diagnóstico para definir el apoyo que realmente necesita y una ruta clara de trabajo.</p><a class="btn btn-light" href="/contacto">Solicitar reunión</a></aside></div></section>
+
+  <section class="section oxi-band"><div class="container oxi-grid"><div><span class="eyebrow">Comercialización de CIPRL</span><h2>Convertimos certificados negociables en oportunidades para empresas.</h2><p class="lead">Diyiming acompaña la evaluación, negociación y cierre de operaciones con CIPRL que tengan carácter negociable. Vinculamos a sus titulares con empresas contribuyentes interesadas en adquirirlos y aplicarlos al pago del Impuesto a la Renta, previa revisión de las condiciones de cada operación y del marco vigente.</p><a class="btn btn-light" href="/contacto">Evaluar una operación</a></div><div class="oxi-points"><div class="oxi-point"><b>Evaluación especializada</b><span>Revisión documental, tributaria y operativa de la oportunidad.</span></div><div class="oxi-point"><b>Articulación comercial</b><span>Conexión entre titulares y empresas contribuyentes con interés real.</span></div><div class="oxi-point"><b>Acompañamiento al cierre</b><span>Coordinación y trazabilidad durante el proceso de negociación.</span></div></div></div></section>
 </BaseLayout>
