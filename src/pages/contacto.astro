@@ -3,8 +3,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getSettings } from "../lib/sanity";
 
 const settings = await getSettings();
-const email = settings.email || "contacto@diyiming.com";
-const address = settings.address || "Lima, Perú";
+const email = !settings.email || settings.email === "contacto@diyiming.com" ? "caspiazu@diyiming.pe" : settings.email;
+const address = settings.address || "Calle Luis Medina 176, San Miguel, Ica";
 const turnstileSiteKey = import.meta.env.TURNSTILE_SITE_KEY;
 ---
 
@@ -49,7 +49,9 @@ const turnstileSiteKey = import.meta.env.TURNSTILE_SITE_KEY;
             <option>Evaluar una oportunidad OxI</option>
             <option>Asesoría para empresa privada</option>
             <option>Asesoría para entidad pública</option>
-            <option>Capacitación</option>
+            <option>Comercialización de CIPRL</option>
+            <option>Capacitación especializada</option>
+            <option>Deseo un perfil o ficha técnica</option>
             <option>Otra consulta</option>
           </select>
         </label>
@@ -68,6 +70,15 @@ const turnstileSiteKey = import.meta.env.TURNSTILE_SITE_KEY;
     const form = document.querySelector<HTMLFormElement>("#contact-form");
     const status = document.querySelector<HTMLElement>("#form-status");
     const button = form?.querySelector<HTMLButtonElement>(".submit-button");
+    const reasons: Record<string, string> = {
+      "gestion-oxi": "Evaluar una oportunidad OxI",
+      "comercializacion-ciprl": "Comercialización de CIPRL",
+      "capacitacion": "Capacitación especializada",
+      "perfil-ficha-tecnica": "Deseo un perfil o ficha técnica"
+    };
+    const requestedReason = new URLSearchParams(window.location.search).get("motivo");
+    const interest = form?.querySelector<HTMLSelectElement>('select[name="interest"]');
+    if (requestedReason && interest && reasons[requestedReason]) interest.value = reasons[requestedReason];
     form?.addEventListener("submit", async (event) => {
       event.preventDefault();
       if (!form || !status || !button) return;

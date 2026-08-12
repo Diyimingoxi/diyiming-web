@@ -3,8 +3,8 @@ import type {SiteSettings} from "../lib/sanity";
 
 interface Props { settings: SiteSettings; }
 const {settings} = Astro.props;
-const email = settings.email || "contacto@diyiming.com";
-const address = settings.address || "Lima, Perú";
+const email = !settings.email || settings.email === "contacto@diyiming.com" ? "caspiazu@diyiming.pe" : settings.email;
+const address = settings.address || "Calle Luis Medina 176, San Miguel, Ica";
 const description = settings.footerDescription || "Orientación y apoyo técnico para empresas privadas y entidades públicas que participan en proyectos mediante Obras por Impuestos.";
 const year = new Date().getFullYear();
 ---
@@ -17,11 +17,11 @@ const year = new Date().getFullYear();
       </div>
       <div>
         <h3>Empresa</h3>
-        <a href="/nosotros">Nosotros</a><a href="/experiencia">Experiencia</a><a href="/blog">Conocimiento</a>
+        <a href="/nosotros">Nosotros</a><a href="/blog">Conocimiento</a><a href="/contacto">Contacto</a>
       </div>
       <div>
         <h3>Especialidad</h3>
-        <a href="/servicios">Servicios</a><a href="/obras-por-impuestos">Mecanismo OxI</a><a href="/contacto">Contacto</a>
+        <a href="/gestion-oxi">Gestión OxI</a><a href="/comercializacion-ciprl">Comercialización de CIPRL</a><a href="/capacitacion-especializada">Capacitación especializada</a>
       </div>
       <div>
         <h3>Conversemos</h3>
