@@ -1,4 +1,5 @@
 import { createClient } from "@sanity/client";
+import { editorialPosts } from "../content/editorialPosts";
 
 export const projectId = "rlacne6j";
 export const dataset = "production";
@@ -79,6 +80,8 @@ export interface PortableTextBlock {
   _type: string;
   _key?: string;
   style?: string;
+  listItem?: string;
+  level?: number;
   children?: PortableTextSpan[];
   markDefs?: Array<{ _key: string; _type: string; href?: string }>;
   url?: string;
@@ -162,8 +165,8 @@ export function getTeam() {
   );
 }
 
-export function getPosts(limit = 12) {
-  return safeFetch<PostSummary[]>(
+export async function getPosts(limit = 12) {
+  const cmsPosts = await safeFetch<PostSummary[]>(
     `*[_type=="post" && published==true]|order(publishedAt desc)[0...$limit]{
       title,excerpt,publishedAt,"slug":slug.current,
       "imageUrl":coverImage.asset->url,"imageAlt":coverImage.alt
@@ -171,9 +174,21 @@ export function getPosts(limit = 12) {
     [],
     { limit }
   );
+
+  const localPosts = editorialPosts.map(({ body, coverUrl, coverAlt, author, ...summary }) => summary);
+  const uniquePosts = [...localPosts, ...cmsPosts].filter(
+    (post, index, posts) => posts.findIndex(candidate => candidate.slug === post.slug) === index
+  );
+
+  return uniquePosts
+    .sort((a, b) => new Date(b.publishedAt || 0).getTime() - new Date(a.publishedAt || 0).getTime())
+    .slice(0, limit);
 }
 
 export function getPost(slug: string) {
+  const editorialPost = editorialPosts.find(post => post.slug === slug);
+  if (editorialPost) return Promise.resolve(editorialPost);
+
   return safeFetch<Post | null>(
     `*[_type=="post" && slug.current==$slug && published==true][0]{
       title,excerpt,publishedAt,"slug":slug.current,
