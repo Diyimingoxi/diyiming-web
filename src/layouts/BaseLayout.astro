@@ -10,6 +10,8 @@ interface Props {
   image?: string;
   type?: "website" | "article";
   canonical?: string;
+  robots?: string;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
@@ -17,11 +19,53 @@ const {
   description,
   image = "/og.png",
   type = "website",
-  canonical
+  canonical,
+  robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  structuredData = []
 } = Astro.props;
 const settings = await getSettings();
 const canonicalUrl = new URL(canonical || Astro.url.pathname, Astro.site || Astro.url.origin);
 const imageUrl = new URL(image, Astro.site || Astro.url.origin);
+const siteUrl = new URL("/", Astro.site || Astro.url.origin).href;
+const logoUrl = new URL("/assets/images/logo-diyiming.png", Astro.site || Astro.url.origin).href;
+const socialProfiles = [settings.linkedin, settings.facebook].filter(Boolean);
+const organizationSchema = {
+  "@type": "Organization",
+  "@id": `${siteUrl}#organization`,
+  name: settings.companyName || "Diyiming Consultores",
+  url: siteUrl,
+  logo: { "@type": "ImageObject", url: logoUrl },
+  description: "Consultora peruana especializada en gestión de Obras por Impuestos, comercialización de CIPRL, capacitación y documentos técnicos.",
+  email: settings.email || undefined,
+  telephone: settings.phone || undefined,
+  address: settings.address ? {
+    "@type": "PostalAddress",
+    streetAddress: settings.address,
+    addressCountry: "PE"
+  } : undefined,
+  sameAs: socialProfiles.length ? socialProfiles : undefined
+};
+const websiteSchema = {
+  "@type": "WebSite",
+  "@id": `${siteUrl}#website`,
+  url: siteUrl,
+  name: "Diyiming Consultores",
+  inLanguage: "es-PE",
+  publisher: { "@id": `${siteUrl}#organization` }
+};
+const pageSchema = {
+  "@type": "WebPage",
+  "@id": `${canonicalUrl.href}#webpage`,
+  url: canonicalUrl.href,
+  name: title,
+  description,
+  inLanguage: "es-PE",
+  isPartOf: { "@id": `${siteUrl}#website` },
+  about: { "@id": `${siteUrl}#organization` }
+};
+const extraSchemas = Array.isArray(structuredData) ? structuredData : [structuredData];
+const schemaGraph = [organizationSchema, websiteSchema, pageSchema, ...extraSchemas].filter(Boolean);
+const schemaJson = JSON.stringify({ "@context": "https://schema.org", "@graph": schemaGraph }).replace(/</g, "\\u003c");
 const whatsappNumber = (settings.whatsapp || "").replace(/\D/g, "");
 const whatsappMessage = encodeURIComponent(
   "Hola, deseo recibir información sobre la asesoría de Diyiming en Obras por Impuestos."
@@ -39,7 +83,12 @@ const whatsappUrl = whatsappNumber
     <meta name="theme-color" content="#1b3f91" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <meta name="googlebot" content={robots} />
+    <meta name="author" content="Diyiming Consultores" />
     <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="es-PE" href={canonicalUrl} />
+    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
     <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
     <meta property="og:locale" content="es_PE" />
     <meta property="og:type" content={type} />
@@ -52,6 +101,7 @@ const whatsappUrl = whatsappNumber
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
+    <script is:inline type="application/ld+json" set:html={schemaJson} />
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>

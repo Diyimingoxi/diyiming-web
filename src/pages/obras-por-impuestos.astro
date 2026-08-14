@@ -1,13 +1,133 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const faqs = [
+  {
+    question: "¿Qué son las Obras por Impuestos (OxI)?",
+    answer: "Son una modalidad de ejecución de inversión pública mediante la cual empresas privadas financian y ejecutan intervenciones priorizadas, y recuperan la inversión a través de certificados aplicables al pago del Impuesto a la Renta, conforme al marco vigente."
+  },
+  {
+    question: "¿Qué es un CIPRL?",
+    answer: "Es el Certificado de Inversión Pública Regional y Local – Tesoro Público que reconoce la inversión realizada bajo el mecanismo y puede utilizarse para el pago del Impuesto a la Renta dentro de las condiciones previstas por la normativa."
+  },
+  {
+    question: "¿Todos los CIPRL pueden comercializarse?",
+    answer: "No necesariamente. El carácter negociable depende de la naturaleza del certificado y de las condiciones aplicables. Cada oportunidad debe revisarse antes de ofrecerse o adquirirse."
+  },
+  {
+    question: "¿Diyiming trabaja con empresas y entidades públicas?",
+    answer: "Sí. Diyiming adapta el acompañamiento a las responsabilidades, objetivos y necesidades específicas de empresas privadas y entidades públicas que participan en el mecanismo."
+  },
+  {
+    question: "¿En qué momento conviene pedir asesoría?",
+    answer: "Desde la identificación de una oportunidad. Una revisión temprana ayuda a ordenar información, anticipar riesgos y definir una ruta técnica, institucional y documental más clara."
+  }
+];
+
+const pageUrl = new URL("/obras-por-impuestos", Astro.site || Astro.url.origin).href;
+const structuredData = [
+  {
+    "@type": "FAQPage",
+    mainEntity: faqs.map(item => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer }
+    }))
+  },
+  {
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: new URL("/", Astro.site || Astro.url.origin).href },
+      { "@type": "ListItem", position: 2, name: "Obras por Impuestos", item: pageUrl }
+    ]
+  }
+];
 ---
 
-<BaseLayout title="Obras por Impuestos y CIPRL | Diyiming Consultores" description="Conozca cómo funciona Obras por Impuestos y la comercialización de CIPRL con el acompañamiento de Diyiming.">
-  <section class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/">Inicio</a> / Obras por Impuestos</div><span class="eyebrow">Mecanismo OxI</span><h1>Una herramienta que convierte capacidad tributaria en infraestructura.</h1><p class="lead">Las Obras por Impuestos permiten que empresas privadas financien y ejecuten proyectos públicos y reconozcan la inversión mediante certificados aplicables al pago de impuestos, conforme al marco vigente.</p></div></section>
+<BaseLayout
+  title="Obras por Impuestos (OxI) en Perú: guía | Diyiming"
+  description="Conozca qué son las Obras por Impuestos en Perú, cómo funciona el mecanismo OxI, sus fases, participantes y certificados CIPRL con Diyiming Consultores."
+  structuredData={structuredData}
+>
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumbs"><a href="/">Inicio</a> / Obras por Impuestos</div>
+      <span class="eyebrow">Guía del mecanismo OxI en Perú</span>
+      <h1>Obras por Impuestos: inversión privada que impulsa infraestructura pública.</h1>
+      <p class="lead">Las Obras por Impuestos (OxI) articulan al sector público y al sector privado para ejecutar inversiones y servicios públicos priorizados. La empresa privada financia la intervención y obtiene certificados reconocidos por el Tesoro Público para aplicarlos al pago de su Impuesto a la Renta, conforme a la normativa vigente.</p>
+    </div>
+  </section>
 
-  <section class="section"><div class="container content-grid"><div><span class="eyebrow">Del proyecto al certificado</span><h2>¿Cómo se convierte una oportunidad en una obra con impacto?</h2><p>El proceso exige coordinación, consistencia técnica, cumplimiento documental y decisiones oportunas. Diyiming acompaña la ruta completa para reducir incertidumbre y mantener cada iniciativa enfocada en resultados.</p><div class="timeline"><div class="timeline-item"><b>01</b><div><h3>Identificación y priorización</h3><p>Reconocemos necesidades públicas y evaluamos su pertinencia, impacto y condiciones iniciales.</p></div></div><div class="timeline-item"><b>02</b><div><h3>Evaluación y estructuración</h3><p>Ordenamos la información y articulamos los componentes técnicos, financieros, legales e institucionales.</p></div></div><div class="timeline-item"><b>03</b><div><h3>Selección y convenio</h3><p>Acompañamos los procedimientos, compromisos y documentos necesarios para iniciar la inversión.</p></div></div><div class="timeline-item"><b>04</b><div><h3>Ejecución y seguimiento</h3><p>Monitoreamos avances, entregables, alertas, cronogramas y decisiones durante el desarrollo de la obra.</p></div></div><div class="timeline-item"><b>05</b><div><h3>Cierre y emisión del CIPRL</h3><p>Apoyamos el cumplimiento de hitos y la gestión documental para el reconocimiento de la inversión.</p></div></div></div></div><aside class="sidecard"><h3>¿Por dónde empezar?</h3><p>Una evaluación temprana permite distinguir oportunidades reales, ordenar la información disponible y definir el siguiente paso con menor riesgo.</p><a class="btn btn-light" href="/contacto">Evaluar una oportunidad</a></aside></div></section>
+  <section class="section">
+    <div class="container content-grid">
+      <div>
+        <span class="eyebrow">Cómo funciona OxI</span>
+        <h2>Del problema público a una inversión ejecutada y certificada.</h2>
+        <p>El mecanismo requiere que la necesidad pública, la viabilidad técnica, el presupuesto, el proceso de selección, la ejecución y el reconocimiento de la inversión formen una sola ruta. La calidad de cada decisión prepara la etapa siguiente.</p>
+        <p>Diyiming integra análisis, estructuración, coordinación y seguimiento para ayudar a reducir incertidumbre y mantener el proyecto orientado a resultados verificables.</p>
+        <div class="timeline">
+          <div class="timeline-item"><b>01</b><div><h3>Priorización</h3><p>La entidad pública identifica brechas, evalúa alternativas y prioriza inversiones alineadas con sus objetivos de desarrollo.</p></div></div>
+          <div class="timeline-item"><b>02</b><div><h3>Actos previos</h3><p>Se conforma el comité correspondiente, se asegura la ruta presupuestal y se preparan las bases y documentos del proceso.</p></div></div>
+          <div class="timeline-item"><b>03</b><div><h3>Selección y convenio</h3><p>Se convoca, evalúa y selecciona a la empresa privada y, cuando corresponde, a la entidad privada supervisora.</p></div></div>
+          <div class="timeline-item"><b>04</b><div><h3>Ejecución, certificación y cierre</h3><p>Se desarrolla la intervención, se supervisan los avances, se recibe y liquida el proyecto y se tramitan los certificados de inversión.</p></div></div>
+        </div>
+      </div>
+      <aside class="sidecard">
+        <h3>¿Por dónde empezar?</h3>
+        <p>Una evaluación temprana permite distinguir oportunidades reales, ordenar la información disponible y definir el siguiente paso con menor riesgo.</p>
+        <a class="btn btn-light" href="/contacto?motivo=Evaluar%20una%20oportunidad%20OxI">Evaluar una oportunidad</a>
+      </aside>
+    </div>
+  </section>
 
-  <section class="section oxi-band"><div class="container oxi-grid"><div><span class="eyebrow">CIPRL</span><h2>Del reconocimiento de la inversión a una operación con valor.</h2><p class="lead">Los CIPRL reconocen la inversión realizada bajo Obras por Impuestos y pueden aplicarse al pago del Impuesto a la Renta. Cuando el certificado tiene carácter negociable, Diyiming puede acompañar su comercialización y vincularlo con empresas contribuyentes interesadas en adquirirlo.</p><a class="btn btn-light" href="/contacto">Consultar por CIPRL</a></div><div class="oxi-points"><div class="oxi-point"><b>Revisión de elegibilidad</b><span>Validamos las características del certificado y la operación antes de avanzar.</span></div><div class="oxi-point"><b>Conexión empresarial</b><span>Identificamos contrapartes con interés y capacidad para evaluar la adquisición.</span></div><div class="oxi-point"><b>Negociación acompañada</b><span>Facilitamos información, coordinación y trazabilidad hasta el cierre.</span></div></div></div></section>
+  <section class="section soft">
+    <div class="container">
+      <span class="eyebrow">Participantes</span>
+      <h2>Un mecanismo que exige coordinación entre actores.</h2>
+      <div class="cards">
+        <article class="card"><h3>Entidad pública</h3><p>Prioriza la intervención, conduce los actos que le corresponden y participa en el seguimiento, recepción y cierre.</p></article>
+        <article class="card"><h3>Empresa privada</h3><p>Financia la intervención y participa directamente o mediante ejecutores especializados, de acuerdo con el convenio.</p></article>
+        <article class="card"><h3>Ejecutor y supervisor</h3><p>Aportan las capacidades técnicas y los controles necesarios para cumplir el alcance, la calidad y la trazabilidad.</p></article>
+      </div>
+    </div>
+  </section>
 
-  <section class="section soft"><div class="container"><span class="eyebrow">Preguntas frecuentes</span><h2>Respuestas para una primera aproximación.</h2><div class="faq"><details><summary>¿Qué es un CIPRL?</summary><p>Es el certificado que reconoce el monto invertido por una empresa en un proyecto de Obras por Impuestos y que puede utilizarse para el pago del Impuesto a la Renta dentro de las condiciones previstas por la normativa.</p></details><details><summary>¿Todos los CIPRL pueden comercializarse?</summary><p>No necesariamente. El carácter negociable depende de la naturaleza del certificado y de las condiciones aplicables. Cada oportunidad debe revisarse antes de ofrecerse o adquirirse.</p></details><details><summary>¿Qué empresas pueden adquirir un CIPRL negociable?</summary><p>Empresas contribuyentes que, luego de evaluar su posición tributaria y los requisitos aplicables, determinen que el certificado puede ser utilizado en el pago de su Impuesto a la Renta. Diyiming acompaña esa evaluación y la operación.</p></details><details><summary>¿Diyiming trabaja con empresas y entidades públicas?</summary><p>Sí. Adaptamos el acompañamiento a las responsabilidades, objetivos y necesidades específicas de cada actor del mecanismo.</p></details><details><summary>¿En qué momento conviene pedir asesoría?</summary><p>Desde la identificación de una oportunidad. Una revisión temprana ayuda a ordenar información, anticipar riesgos y evitar esfuerzos mal enfocados.</p></details></div></div></section>
+  <section class="section oxi-band">
+    <div class="container oxi-grid">
+      <div>
+        <span class="eyebrow">CIPRL y CIPGN</span>
+        <h2>El reconocimiento de la inversión dentro del mecanismo.</h2>
+        <p class="lead">Los certificados de inversión reconocen los montos ejecutados bajo Obras por Impuestos y pueden aplicarse al pago del Impuesto a la Renta según las condiciones vigentes. Diyiming también acompaña la evaluación y comercialización de certificados negociables.</p>
+        <a class="btn btn-light" href="/comercializacion-ciprl">Conocer la comercialización de CIPRL</a>
+      </div>
+      <div class="oxi-points">
+        <div class="oxi-point"><b>Gestión integral</b><span>Estructuración y acompañamiento a lo largo de las fases del mecanismo.</span></div>
+        <div class="oxi-point"><b>Capacitación aplicada</b><span>Conocimiento para equipos públicos y privados que deben tomar decisiones.</span></div>
+        <div class="oxi-point"><b>Documentos técnicos</b><span>Perfiles, fichas y expedientes que convierten una necesidad en una inversión ejecutable.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Profundice en el mecanismo</span>
+      <h2>Guías para comprender y gestionar Obras por Impuestos.</h2>
+      <div class="cards">
+        <a class="card" href="/blog/cuatro-fases-obras-por-impuestos"><h3>Las cuatro fases de una Obra por Impuestos</h3><p>Priorización, actos previos, selección, ejecución y cierre explicados paso a paso.</p></a>
+        <a class="card" href="/blog/decisiones-criticas-proyecto-oxi-ejecutable"><h3>Cinco decisiones críticas para una inversión ejecutable</h3><p>Proyecto, recursos, estructura, aliados y certificación.</p></a>
+        <a class="card" href="/gestion-oxi"><h3>Gestión integral de Obras por Impuestos</h3><p>Conozca cómo Diyiming acompaña el recorrido completo.</p></a>
+      </div>
+      <p class="source-note">Para información normativa y material oficial, consulte también el portal de <a href="https://www.investinperu.pe/que-es-obras-por-impuestos/" target="_blank" rel="noopener noreferrer">Obras por Impuestos de ProInversión</a>.</p>
+    </div>
+  </section>
+
+  <section class="section soft">
+    <div class="container">
+      <span class="eyebrow">Preguntas frecuentes</span>
+      <h2>Respuestas para una primera aproximación.</h2>
+      <div class="faq">
+        {faqs.map(item => <details><summary>{item.question}</summary><p>{item.answer}</p></details>)}
+      </div>
+    </div>
+  </section>
 </BaseLayout>
