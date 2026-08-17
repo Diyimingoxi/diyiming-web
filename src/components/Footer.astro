@@ -3,7 +3,7 @@ import type {SiteSettings} from "../lib/sanity";
 
 interface Props { settings: SiteSettings; }
 const {settings} = Astro.props;
-const email = !settings.email || settings.email === "contacto@diyiming.com" ? "caspiazu@diyiming.pe" : settings.email;
+const email = "info@diyiming.pe";
 const address = settings.address || "Calle Luis Medina 176, San Miguel, Ica";
 const description = settings.footerDescription || "Orientación y apoyo técnico para empresas privadas y entidades públicas que participan en proyectos mediante Obras por Impuestos.";
 const year = new Date().getFullYear();

@@ -109,7 +109,7 @@ const fallbackSettings: Required<Pick<SiteSettings,
   heroDescription: "Acompañamos a empresas privadas y entidades públicas en la estructuración, gestión y ejecución de proyectos mediante Obras por Impuestos.",
   aboutTitle: "Un aliado estratégico para proyectos que transforman.",
   aboutText: "Diyiming Consultores brinda orientación y apoyo técnico a empresas privadas y entidades públicas que participan en proyectos bajo el mecanismo de Obras por Impuestos.",
-  email: "caspiazu@diyiming.pe",
+  email: "info@diyiming.pe",
   address: "Calle Luis Medina 176, San Miguel, Ica"
 };
 

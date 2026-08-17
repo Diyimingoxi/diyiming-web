@@ -8,14 +8,14 @@ const heroTitle = !settings.heroTitle || settings.heroTitle.includes("Convertimo
   ? "Transformamos tus impuestos en obras que generan desarrollo."
   : settings.heroTitle;
 const heroDescription = !settings.heroDescription || settings.heroDescription.startsWith("Acompañamos a empresas privadas")
-  ? "Brindamos asesoría estratégica para estructurar, gestionar y ejecutar proyectos que impulsan el desarrollo del país mediante soluciones integrales en Obras por Impuestos."
+  ? "Te brindamos asesoría estratégica para estructurar, gestionar y ejecutar proyectos para impulsar el desarrollo del país mediante soluciones integrales en Obras por Impuestos (OxI)."
   : settings.heroDescription;
 
 const capabilities = [
-  { number: "01", title: "Gestión integral de Obras por Impuestos", summary: "Estructuramos, articulamos y acompañamos cada etapa, desde la oportunidad inicial hasta la correcta emisión del CIPRL.", href: "/gestion-oxi" },
-  { number: "02", title: "Comercialización de CIPRL", summary: "Conectamos certificados negociables con empresas contribuyentes interesadas en aplicarlos al pago de sus obligaciones tributarias.", href: "/comercializacion-ciprl" },
-  { number: "03", title: "Capacitación especializada en OxI", summary: "Preparamos a empresas privadas y entidades públicas para comprender y gestionar el mecanismo con seguridad.", href: "/capacitacion-especializada" },
-  { number: "04", title: "Perfiles, fichas y expedientes técnicos", summary: "Elaboramos documentos técnicos que convierten una necesidad pública en una inversión viable y ejecutable.", href: "/contacto?motivo=perfil-ficha-tecnica" }
+  { number: "01", title: "Gestión OxI", summary: "Asesoramiento y acompañamiento integral en la gestión de proyectos bajo el mecanismo de Obras por Impuestos, facilitando su planificación, ejecución y seguimiento.", href: "/gestion-oxi" },
+  { number: "02", title: "Comercialización de Certificados de Inversión Pública (CIPRL)", summary: "Conectamos a nuestros clientes con empresas adquirentes de certificados para comercializar sus CIPRL y/o CIPGN de forma ágil, segura y rentable.", href: "/comercializacion-ciprl" },
+  { number: "03", title: "Capacitación en el mecanismo de Obras por Impuestos", summary: "Desarrollamos capacitaciones para empresas públicas y privadas, orientadas a fortalecer sus conocimientos y capacidades para aplicar el mecanismo.", href: "/capacitacion-especializada" },
+  { number: "04", title: "Desarrollo de perfiles, fichas y expedientes técnicos", summary: "Elaboramos documentos técnicos para la formulación, evaluación y ejecución de proyectos de inversión pública.", href: "/contacto?motivo=perfil-ficha-tecnica" }
 ];
 
 const partners = [
@@ -69,14 +69,22 @@ const partners = [
     </div>
   </section>
 
-  <section class="section why-us">
+  <section class="section">
     <div class="container">
-      <span class="eyebrow">Por qué Diyiming</span><h2>Capacidad especializada para avanzar con claridad.</h2>
-      <div class="benefit-grid">
-        <article class="benefit-card reveal"><span>01</span><h3>Lectura integral</h3><p>Integramos los componentes técnicos, legales, financieros e institucionales de cada iniciativa.</p></article>
-        <article class="benefit-card reveal"><span>02</span><h3>Articulación efectiva</h3><p>Coordinamos a los actores involucrados para sostener decisiones y avances oportunos.</p></article>
-        <article class="benefit-card reveal"><span>03</span><h3>Rigor y transparencia</h3><p>Trabajamos con trazabilidad documental, control de riesgos y comunicación clara.</p></article>
-        <article class="benefit-card reveal"><span>04</span><h3>Acompañamiento integral</h3><p>Seguimos el proyecto desde su evaluación hasta el cierre y la emisión del certificado.</p></article>
+      <span class="eyebrow">¿Qué hacemos?</span>
+      <h2>Convertimos oportunidades en proyectos de alto impacto.</h2>
+      <p class="lead">Orientamos a empresas privadas y entidades públicas en el mecanismo de Obras por Impuestos para ejecutar proyectos exitosos que generen desarrollo y ayuden en el cierre de brechas. Ofrecemos un acompañamiento integral durante todo el ciclo del proyecto, asegurando una gestión eficiente, transparente y alineada con la normativa vigente.</p>
+    </div>
+  </section>
+
+  <section class="section soft">
+    <div class="container">
+      <span class="eyebrow">Metodología</span><h2>Nuestro proceso de trabajo en OxI.</h2>
+      <div class="route-grid four">
+        <article class="route-card reveal"><b>01</b><h3>Estructuración y viabilidad del proyecto</h3><p>Identificamos proyectos normativamente viables que se ajusten a las metas de inversión de la empresa financista.</p></article>
+        <article class="route-card reveal"><b>02</b><h3>Formalización y adjudicación del proyecto</h3><p>Brindamos acompañamiento integral en el proceso de selección, resguardando la responsabilidad legal de la empresa privada frente a la entidad pública.</p></article>
+        <article class="route-card reveal"><b>03</b><h3>Gestión de obra y control de calidad</h3><p>Supervisamos de manera técnica y financiera la ejecución del proyecto para prevenir retrasos en la obra y contingencias.</p></article>
+        <article class="route-card reveal"><b>04</b><h3>Obtención y optimización del beneficio fiscal</h3><p>Gestionamos la recepción y liquidación de la obra hasta lograr la emisión efectiva del CIPRL o CIPGN, con seguridad jurídica para la empresa financista.</p></article>
       </div>
     </div>
   </section>
@@ -114,5 +122,5 @@ const partners = [
     </div>
   </section>
 
-  <section class="cta"><div class="container cta-row"><div><span class="eyebrow">Iniciemos una conversación</span><h2>¿Tiene una oportunidad OxI o necesita estructurar un proyecto?</h2><p>Conversemos para identificar el siguiente paso más conveniente.</p></div><a class="btn btn-light" href="/contacto">Hablar con un especialista</a></div></section>
+  <section class="cta"><div class="container cta-row"><div><span class="eyebrow">Iniciemos una conversación</span><h2>¿Está evaluando desarrollar un proyecto mediante Obras por Impuestos?</h2><p>Le ayudamos a identificar oportunidades, reducir riesgos y gestionar cada etapa del proceso hasta la obtención del CIPRL.</p></div><a class="btn btn-light" href="/contacto">Solicitar una reunión</a></div></section>
 </BaseLayout>

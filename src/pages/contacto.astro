@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getSettings } from "../lib/sanity";
 
 const settings = await getSettings();
-const email = !settings.email || settings.email === "contacto@diyiming.com" ? "caspiazu@diyiming.pe" : settings.email;
+const email = "info@diyiming.pe";
 const address = settings.address || "Calle Luis Medina 176, San Miguel, Ica";
 const turnstileSiteKey = import.meta.env.TURNSTILE_SITE_KEY;
 ---
@@ -13,16 +13,16 @@ const turnstileSiteKey = import.meta.env.TURNSTILE_SITE_KEY;
     <div class="container">
       <div class="breadcrumbs"><a href="/">Inicio</a> / Contacto</div>
       <span class="eyebrow">Conversemos</span>
-      <h1>El siguiente paso comienza con una buena conversación.</h1>
-      <p class="lead">Cuéntenos qué está evaluando. Nuestro equipo revisará su consulta y se comunicará para comprender el contexto.</p>
+      <h1>Hablemos sobre tu próximo proyecto.</h1>
+      <p class="lead">Cuéntanos qué necesitas y nuestro equipo te ayudará a encontrar una solución eficiente y adecuada para tu operación.</p>
     </div>
   </section>
   <section class="section">
     <div class="container contact-grid">
       <div>
         <span class="eyebrow">Contacto</span>
-        <h2>Convirtamos una consulta en un siguiente paso claro.</h2>
-        <p class="lead">La información se registra de manera privada para que el equipo de Diyiming pueda responder y dar seguimiento.</p>
+        <h2>Hablemos de tu próximo proyecto.</h2>
+        <p class="lead">Déjanos tus datos y nuestro equipo se pondrá en contacto contigo para brindarte una orientación inicial.</p>
         <div class="contact-list">
           <div class="contact-item"><b>Correo</b><br /><a href={`mailto:${email}`}>{email}</a></div>
           {settings.phone && <div class="contact-item"><b>Teléfono</b><br /><a href={`tel:${settings.phone.replace(/\s/g, "")}`}>{settings.phone}</a></div>}
