@@ -18,6 +18,10 @@ export interface SiteSettings {
   heroEyebrow?: string;
   heroTitle?: string;
   heroDescription?: string;
+  heroImageUrl?: string;
+  heroImageAlt?: string;
+  heroPrimaryLabel?: string;
+  heroSecondaryLabel?: string;
   aboutTitle?: string;
   aboutText?: string;
   email?: string;
@@ -28,6 +32,9 @@ export interface SiteSettings {
   facebook?: string;
   contactHours?: string;
   footerDescription?: string;
+  processSteps?: Array<{title?: string; description?: string}>;
+  ctaTitle?: string;
+  ctaLabel?: string;
 }
 
 export interface Service {
@@ -128,7 +135,9 @@ async function safeFetch<T>(query: string, fallback: T, params: Record<string, u
 export function getSettings() {
   return safeFetch<SiteSettings>(
     `*[_type=="siteSettings" && _id=="siteSettings"][0]{
-      companyName,heroEyebrow,heroTitle,heroDescription,aboutTitle,aboutText,
+      companyName,heroEyebrow,heroTitle,heroDescription,heroPrimaryLabel,heroSecondaryLabel,
+      "heroImageUrl":heroImage.asset->url,"heroImageAlt":heroImage.alt,
+      aboutTitle,aboutText,processSteps,ctaTitle,ctaLabel,
       email,phone,whatsapp,address,contactHours,linkedin,facebook,footerDescription
     }`,
     fallbackSettings
