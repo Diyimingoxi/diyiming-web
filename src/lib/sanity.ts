@@ -9,7 +9,8 @@ export const sanity = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: true,
+  // El contenido empresarial debe reflejarse apenas se publica desde Studio.
+  useCdn: false,
   perspective: "published"
 });
 
