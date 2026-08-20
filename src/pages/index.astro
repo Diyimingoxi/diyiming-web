@@ -1,9 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BlogCard from "../components/BlogCard.astro";
-import { getPosts, getSettings } from "../lib/sanity";
+import { getPartners, getPosts, getSettings, imageUrl } from "../lib/sanity";
 
-const [settings, posts] = await Promise.all([getSettings(), getPosts(3)]);
+const [settings, posts, cmsPartners] = await Promise.all([getSettings(), getPosts(3), getPartners()]);
 const heroTitle = !settings.heroTitle || settings.heroTitle.includes("Convertimos inversión")
   ? "Transformamos tus impuestos en obras que generan desarrollo."
   : settings.heroTitle;
@@ -18,7 +18,7 @@ const capabilities = [
   { number: "04", title: "Desarrollo de perfiles, fichas y expedientes técnicos", summary: "Elaboramos documentos técnicos para la formulación, evaluación y ejecución de proyectos de inversión pública.", href: "/contacto?motivo=perfil-ficha-tecnica" }
 ];
 
-const partners = [
+const fallbackPartners = [
   ["Gobierno Regional de La Libertad", "gobierno-regional-la-libertad.png"],
   ["Gobierno Regional de Arequipa", "gobierno-regional-arequipa.png"],
   ["Gobierno Regional de Cajamarca", "gobierno-regional-cajamarca.png"],
@@ -34,6 +34,9 @@ const partners = [
   ["Municipalidad Distrital de San Juan Bautista", "municipalidad-distrital-san-juan-bautista.png"],
   ["Municipalidad Distrital de El Tambo", "municipalidad-distrital-el-tambo.png"]
 ];
+const partners = cmsPartners.length
+  ? cmsPartners
+  : fallbackPartners.map(([name, file]) => ({name, logoUrl: `/assets/images/aliados/${file}`, logoAlt: `Logotipo de ${name}`}));
 ---
 
 <BaseLayout title="Diyiming Consultores | Especialistas en Obras por Impuestos" description="Gestión integral, comercialización de CIPRL, capacitación y documentos técnicos para proyectos de Obras por Impuestos en Perú.">
@@ -110,7 +113,7 @@ const partners = [
       <span class="eyebrow">Experiencia territorial</span>
       <div class="section-heading-row"><div><h2>Aliados y entidades donde hemos desarrollado Obras por Impuestos.</h2><p class="lead">Experiencia articulando proyectos con gobiernos regionales y municipalidades en distintas zonas del país.</p></div><a class="btn btn-outline" href="/experiencia">Conocer nuestra experiencia</a></div>
       <div class="partner-grid reveal">
-        {partners.map(([name, file]) => <div class="partner-logo" title={name}><img src={`/assets/images/aliados/${file}`} alt={`Logotipo de ${name}`} loading="lazy" /><span>{name}</span></div>)}
+        {partners.map((partner) => <div class="partner-logo" title={partner.name}><img src={partner.logoUrl?.startsWith("http") ? imageUrl(partner.logoUrl, 500) : partner.logoUrl} alt={partner.logoAlt || `Logotipo de ${partner.name}`} loading="lazy" /><span>{partner.name}</span></div>)}
       </div>
     </div>
   </section>

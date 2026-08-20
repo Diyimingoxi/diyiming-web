@@ -61,6 +61,9 @@ export interface Faq {
   category?: string;
 }
 
+export interface Partner { name: string; website?: string; logoUrl?: string; logoAlt?: string; order?: number; }
+export interface GalleryImage { title: string; caption?: string; category?: string; imageUrl: string; imageAlt?: string; order?: number; }
+
 export interface PostSummary {
   title: string;
   excerpt?: string;
@@ -163,6 +166,14 @@ export function getTeam() {
     }`,
     []
   );
+}
+
+export function getPartners() {
+  return safeFetch<Partner[]>(`*[_type=="partner" && active!=false]|order(order asc,name asc){name,website,order,"logoUrl":logo.asset->url,"logoAlt":coalesce(logo.alt,name)}`, []);
+}
+
+export function getGalleryImages() {
+  return safeFetch<GalleryImage[]>(`*[_type=="galleryImage" && active!=false && defined(image.asset)]|order(order asc,_createdAt desc){title,caption,category,order,"imageUrl":image.asset->url,"imageAlt":coalesce(image.alt,title)}`, []);
 }
 
 export async function getPosts(limit = 12) {

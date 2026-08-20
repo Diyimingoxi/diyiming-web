@@ -13,6 +13,8 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('teamMember').title('Equipo directivo'),
       S.documentTypeListItem('post').title('Artículos del blog'),
       S.documentTypeListItem('faq').title('Preguntas frecuentes'),
+      S.documentTypeListItem('partner').title('Aliados y entidades'),
+      S.documentTypeListItem('galleryImage').title('Galería de proyectos'),
       S.divider(),
       S.documentTypeListItem('lead').title('Consultas y oportunidades'),
     ])
