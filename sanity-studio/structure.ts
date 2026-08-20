@@ -13,7 +13,13 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('teamMember').title('Equipo directivo'),
       S.documentTypeListItem('post').title('Artículos del blog'),
       S.documentTypeListItem('faq').title('Preguntas frecuentes'),
-      S.documentTypeListItem('partner').title('Aliados y entidades'),
+      S.listItem()
+        .title('Aliados y entidades')
+        .child(
+          S.documentTypeList('partner')
+            .title('Aliados y entidades')
+            .defaultOrdering([{field: 'order', direction: 'asc'}]),
+        ),
       S.documentTypeListItem('galleryImage').title('Galería de proyectos'),
       S.divider(),
       S.documentTypeListItem('lead').title('Consultas y oportunidades'),

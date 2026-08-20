@@ -18,25 +18,7 @@ const capabilities = [
   { number: "04", title: "Desarrollo de perfiles, fichas y expedientes técnicos", summary: "Elaboramos documentos técnicos para la formulación, evaluación y ejecución de proyectos de inversión pública.", href: "/contacto?motivo=perfil-ficha-tecnica" }
 ];
 
-const fallbackPartners = [
-  ["Gobierno Regional de La Libertad", "gobierno-regional-la-libertad.png"],
-  ["Gobierno Regional de Arequipa", "gobierno-regional-arequipa.png"],
-  ["Gobierno Regional de Cajamarca", "gobierno-regional-cajamarca.png"],
-  ["Gobierno Regional de Ucayali", "gobierno-regional-ucayali.png"],
-  ["Gobierno Regional de San Martín", "gobierno-regional-san-martin.png"],
-  ["Gobierno Regional de Ica", "gobierno-regional-ica.png"],
-  ["Gobierno Regional de Lambayeque", "gobierno-regional-lambayeque.png"],
-  ["Municipalidad Provincial de Huancayo", "municipalidad-provincial-huancayo.png"],
-  ["Municipalidad Distrital de La Tinguiña", "municipalidad-distrital-la-tinguina.png"],
-  ["Municipalidad Distrital de Parcona", "municipalidad-distrital-parcona.png"],
-  ["Municipalidad Distrital de Cerro Colorado", "municipalidad-distrital-cerro-colorado.png"],
-  ["Municipalidad Distrital de Ocucaje", "municipalidad-distrital-ocucaje.png"],
-  ["Municipalidad Distrital de San Juan Bautista", "municipalidad-distrital-san-juan-bautista.png"],
-  ["Municipalidad Distrital de El Tambo", "municipalidad-distrital-el-tambo.png"]
-];
-const partners = cmsPartners.length
-  ? cmsPartners
-  : fallbackPartners.map(([name, file]) => ({name, logoUrl: `/assets/images/aliados/${file}`, logoAlt: `Logotipo de ${name}`}));
+const partners = cmsPartners;
 ---
 
 <BaseLayout title="Diyiming Consultores | Especialistas en Obras por Impuestos" description="Gestión integral, comercialización de CIPRL, capacitación y documentos técnicos para proyectos de Obras por Impuestos en Perú.">
@@ -112,9 +94,9 @@ const partners = cmsPartners.length
     <div class="container">
       <span class="eyebrow">Experiencia territorial</span>
       <div class="section-heading-row"><div><h2>Aliados y entidades donde hemos desarrollado Obras por Impuestos.</h2><p class="lead">Experiencia articulando proyectos con gobiernos regionales y municipalidades en distintas zonas del país.</p></div><a class="btn btn-outline" href="/experiencia">Conocer nuestra experiencia</a></div>
-      <div class="partner-grid reveal">
+      {partners.length ? <div class="partner-grid reveal">
         {partners.map((partner) => <div class="partner-logo" title={partner.name}><img src={partner.logoUrl?.startsWith("http") ? imageUrl(partner.logoUrl, 500) : partner.logoUrl} alt={partner.logoAlt || `Logotipo de ${partner.name}`} loading="lazy" /><span>{partner.name}</span></div>)}
-      </div>
+      </div> : <div class="empty-state">Los aliados publicados desde el CMS aparecerán aquí.</div>}
     </div>
   </section>
 
